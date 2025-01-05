@@ -28,7 +28,7 @@ RED = (235, 0, 0)
 BLUE = (0, 0, 225)
 GREEN = (0, 255, 0)
 
-# Define the grid layout
+# Grid
 grid_layout = [
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     "XXXXOOXXXXLXLLLLLLLXMOXOOOOOOX",
@@ -62,7 +62,7 @@ grid_layout = [
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 ]
 
-# Parse the grid layout to get wall positions and collectibles
+# Parse grid
 walls = [(x, y) for y, row in enumerate(grid_layout) for x, cell in enumerate(row) if cell == 'X']
 collectibles = [(x, y) for y, row in enumerate(grid_layout) for x, cell in enumerate(row) if cell == 'L']
 lavas = [(x, y) for y, row in enumerate(grid_layout) for x, cell in enumerate(row) if cell == 'M']
@@ -75,7 +75,6 @@ print(starting_points)
 player_x = 4
 player_y = 1
 
-# Define movement direction
 direction = None
 
 # Main loop
@@ -96,7 +95,7 @@ while running:
             elif event.key == pygame.K_DOWN:
                 direction = "DOWN"
 
-    # Move player in the current direction
+    # Move player in the direction
     if direction:
         new_x, new_y = player_x, player_y
         if direction == "LEFT":
@@ -108,11 +107,11 @@ while running:
         elif direction == "DOWN":
             new_y += 1
 
-        # Check for collisions with walls or screen edges
+        # Check for collisions
         if (new_x, new_y) not in walls and 0 <= new_x < num_columns and 0 <= new_y < num_rows:
             player_x, player_y = new_x, new_y
         else:
-            direction = None  # Stop moving if a wall or edge is hit
+            direction = None  # Stop moving if on a wall
 
     # Check for collectible collisions
     if (player_x, player_y) in collectibles:
@@ -132,34 +131,34 @@ while running:
             pygame.quit()
             sys.exit()
 
-    # Clear the screen
+    # Clear screen
     screen.fill(BLACK)
     
-    # Draw the grid
+    # Draw grid
     for x in range(0, screen_width, cell_width):
         pygame.draw.line(screen, WHITE, (x, 0), (x, screen_height))
     for y in range(0, screen_height, cell_height):
         pygame.draw.line(screen, WHITE, (0, y), (screen_width, y))
 
-    # Draw the walls
+    # Draw walls
     for wall in walls:
         pygame.draw.rect(screen, BLUE, (wall[0] * cell_width, wall[1] * cell_height, cell_width, cell_height))
 
-    # Draw the collectibles
+    # Draw collectibles
     for collectible in collectibles:
         pygame.draw.rect(screen, GREEN, (collectible[0] * cell_width +5, collectible[1] * cell_height +5, cell_width /2, cell_height /2))
 
     for lava in lavas:
         pygame.draw.rect(screen, RED, (lava[0] * cell_width, lava[1] * cell_height, cell_width, cell_height))
 
-    # Draw the player
+    # Draw player
     pygame.draw.rect(screen, YELLOW, (player_x * cell_width, player_y * cell_height, cell_width, cell_height))
     pygame.draw.rect(screen, BLACK, (player_x * cell_width + 2, player_y * cell_height + 2, cell_width /4, cell_height /4))
     pygame.draw.rect(screen, BLACK, (player_x * cell_width + 14, player_y * cell_height + 2, cell_width /4, cell_height /4))
 
-    # Update the display
+    # Update
     pygame.display.flip()
-    clock.tick(18)  # Control the frame rate (adjust as needed)
+    clock.tick(18)  # frame delay    
 
 
 
