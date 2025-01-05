@@ -2,10 +2,8 @@ import pygame
 import sys
 import time
 
-# Initialize Pygame
 pygame.init()
 
-# Set up the display
 screen_width = 600
 screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -17,7 +15,6 @@ num_rows = 30
 cell_width = screen_width // num_columns
 cell_height = screen_height // num_rows
 
-# Restart Score
 score = 0
 
 # Define colors
@@ -71,7 +68,7 @@ lavas = [(x, y) for y, row in enumerate(grid_layout) for x, cell in enumerate(ro
 starting_points = sum(row.count("L") for row in grid_layout)
 print(starting_points)
 
-# Define player starting position (ensure it's a clear spot)
+#starting place
 player_x = 4
 player_y = 1
 
